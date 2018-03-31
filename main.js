@@ -4,12 +4,18 @@ let drum = new Tone.Sampler({
     "C3": "./sounds/kick.mp3",
     "D3": "./sounds/snare.mp3",
     "E3": "./sounds/hihat.mp3",
-}, {
-    "release": 1,
+}, function(){
+    sysExecute();
 }).toMaster();
 
-drum.triggerAttackRelease('E3', 0.5, 7);
+let gridArr = document.querySelectorAll(".grid-item");
 
-setTimeout(function () {
-    
-}, 1000)
+for (let x = 0; x < 17; x++) {
+    $(gridArr[x]).on("mousedown", function(){
+      drum.triggerAttackRelease('C3');
+    });
+}
+
+let sysExecute = () => {
+
+}
