@@ -1,14 +1,23 @@
-.grid-container {
-  display: grid;
-  grid-gap: 50px;
-  grid-template-columns: auto auto auto auto;
-  background-color: #2196F3;
-  padding: 10px;
+body {
+    margin: 0px;
 }
+
+.grid-container {
+    display: grid;
+    grid-gap: 12px;
+    width: 298px;
+    height: 298px;
+    grid-template-columns: auto auto auto auto;
+/*    background-color: #2196F3;*/
+    padding: 0px;
+    margin: 12px;
+}
+
 .grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
+    background-color: rgba(255, 225, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 0px;
+/*    margin: 12px;*/
+    font-size: 30px;
+    text-align: center;
 }
