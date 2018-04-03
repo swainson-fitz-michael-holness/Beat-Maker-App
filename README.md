@@ -12,3 +12,5 @@ Basic structure and design is setup for the pads. A sequencer array was created 
 
 ### Session 3 - Refactoring sequence for full functionality
 This is probably the most tedious step. Had to refactor the code to allow the sequencer to be updated and played back extendable to other channels.
+
+### Session 4 - Setting up instrument states

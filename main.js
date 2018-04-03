@@ -11,7 +11,24 @@
 //                |___/
 // Swainson Holness
 
-let sequenceArr = [];
+let kickArr = [];
+let snareArr = [];
+let hihaArr = [];
+let state = [true, false, false] // state[0] = kick, state[1] = snare, state[2] = hihat,
+
+function checkState() {
+    for(var i = 0; i < state.length; i++) {
+        if(state[0]){
+            return kickArr;
+        }
+        if(state[1]){
+            return snareArr;
+        }
+        if(state[2]){
+            return hihatArr;
+        }
+    }
+}
 
 // Runs when the page loads.
 let drum = new Tone.Sampler({
@@ -30,15 +47,15 @@ for (let x = 0; x < 16; x++) {
 
 let gridArr = document.querySelectorAll(".grid-item");
 
-function updateSequence() {
-    if (sequenceArr.includes(this.innerHTML)) {
+function updateSequence(sequenceArr , val) {
+    if (sequenceArr.includes(val.innerHTML)) {
         sequenceArr.splice(sequenceArr.findIndex((el) => {
-            return el === this.innerHTML
+            return el === val.innerHTML
         }), 1);
-        $(gridArr[this.innerHTML]).css("border-color", "black");
+        $(gridArr[val.innerHTML]).css("border-color", "black");
     } else {
-        sequenceArr.push(this.innerHTML);
-        $(gridArr[this.innerHTML]).css("border-color", "brown");
+        sequenceArr.push(val.innerHTML);
+        $(gridArr[val.innerHTML]).css("border-color", "brown");
         drum.triggerAttackRelease('C3');
     }
     sequenceArr.sort(function (a, b) {
@@ -47,7 +64,10 @@ function updateSequence() {
 }
 
 for (let x = 0; x < 16; x++) {
-    $(gridArr[x]).on("mousedown", updateSequence);
+    $(gridArr[x]).on("mousedown", () => {
+        updateSequence(checkState(), gridArr[x]);
+        console.log(checkState());
+    });
 }
 //--X
 
@@ -92,13 +112,13 @@ function parseTime(num) { // refactor this
 
 $("#play").on("click", (e) => {
     e.preventDefault;
-    if (sequenceArr.length === 0) {
+    if (checkState().length === 0) {
 
     } else {
         $(".grid-item").off("mousedown");
         $("#stop").attr("display", "inline");
-        for (let x = 0; x < sequenceArr.length; x++) {
-           sequence.add(setup(parseTime(sequenceArr[x]), "C3", "4n"));
+        for (let x = 0; x < checkState().length; x++) {
+           sequence.add(setup(parseTime(checkState()[x]), "C3", "4n"));
         }
 
         Tone.Transport.start('+0.1');
@@ -109,10 +129,12 @@ $("#stop").on("click", (e) => {
     Tone.Transport.stop();
     sequence.removeAll();
     $("#stop").attr("display", "none");
-    parseArr = [];
+
     for (let x = 0; x < 16; x++) {
-        $(gridArr[x]).on("mousedown", updateSequence);
-    }
+    $(gridArr[x]).on("mousedown", () => {
+        updateSequence(checkState(), gridArr[x]);
+    });
+}
 
 });
 
