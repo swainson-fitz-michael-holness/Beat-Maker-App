@@ -17,14 +17,14 @@ let hihaArr = [];
 let state = [true, false, false] // state[0] = kick, state[1] = snare, state[2] = hihat,
 
 function checkState() {
-    for(var i = 0; i < state.length; i++) {
-        if(state[0]){
+    for (var i = 0; i < state.length; i++) {
+        if (state[0]) {
             return kickArr;
         }
-        if(state[1]){
+        if (state[1]) {
             return snareArr;
         }
-        if(state[2]){
+        if (state[2]) {
             return hihatArr;
         }
     }
@@ -47,7 +47,7 @@ for (let x = 0; x < 16; x++) {
 
 let gridArr = document.querySelectorAll(".grid-item");
 
-function updateSequence(sequenceArr , val) {
+function updateSequence(sequenceArr, val) {
     if (sequenceArr.includes(val.innerHTML)) {
         sequenceArr.splice(sequenceArr.findIndex((el) => {
             return el === val.innerHTML
@@ -66,7 +66,6 @@ function updateSequence(sequenceArr , val) {
 for (let x = 0; x < 16; x++) {
     $(gridArr[x]).on("mousedown", () => {
         updateSequence(checkState(), gridArr[x]);
-        console.log(checkState());
     });
 }
 //--X
@@ -74,12 +73,26 @@ for (let x = 0; x < 16; x++) {
 //=====================================
 // Create instrument parts for drums snare and hihat.
 //=====================================
-let sequence = new Tone.Part((time, event) => {
+let kickPart = new Tone.Part((time, event) => {
     drum.triggerAttackRelease(event.note, event.dur, time);
 }, {});
-sequence.loop = Infinity;
-sequence.loopEnd = '1m';
-sequence.start(0);
+kickPart.loop = Infinity;
+kickPart.loopEnd = '1m';
+kickPart.start(0);
+
+let snarePart = new Tone.Part((time, event) => {
+    drum.triggerAttackRelease(event.note, event.dur, time);
+}, {});
+snarePart.loop = Infinity;
+snarePart.loopEnd = '1m';
+snarePart.start(0);
+
+let hihatPart = new Tone.Part((time, event) => {
+    drum.triggerAttackRelease(event.note, event.dur, time);
+}, {});
+hihatPart.loop = Infinity;
+hihatPart.loopEnd = '1m';
+hihatPart.start(0);
 //--X
 
 
@@ -110,6 +123,13 @@ function parseTime(num) { // refactor this
     }
 }
 
+function parsePart() {
+    if (checkState() === kickArr) {
+        return kickPart;
+    }
+}
+
+// Button controls =====================================================
 $("#play").on("click", (e) => {
     e.preventDefault;
     if (checkState().length === 0) {
@@ -118,7 +138,7 @@ $("#play").on("click", (e) => {
         $(".grid-item").off("mousedown");
         $("#stop").attr("display", "inline");
         for (let x = 0; x < checkState().length; x++) {
-           sequence.add(setup(parseTime(checkState()[x]), "C3", "4n"));
+            parsePart().add(setup(parseTime(checkState()[x]), "C3", "4n"));
         }
 
         Tone.Transport.start('+0.1');
@@ -127,15 +147,18 @@ $("#play").on("click", (e) => {
 
 $("#stop").on("click", (e) => {
     Tone.Transport.stop();
-    sequence.removeAll();
+    parsePart().removeAll();
     $("#stop").attr("display", "none");
 
     for (let x = 0; x < 16; x++) {
-    $(gridArr[x]).on("mousedown", () => {
-        updateSequence(checkState(), gridArr[x]);
-    });
-}
+        $(gridArr[x]).on("mousedown", () => {
+            updateSequence(checkState(), gridArr[x]);
+        });
+    }
+});
 
+$("#kick").on("click", (e) => {
+    alert("hello");
 });
 
 //                                    _
