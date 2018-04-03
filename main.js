@@ -6,7 +6,6 @@
 // Swainson Holness
 
 let sequenceArr = [];
-let parseArr = [];
 
 // Runs when the page loads.
 let drum = new Tone.Sampler({
@@ -60,20 +59,14 @@ function playSequence() {
 }
 
 
-// Update the system, add features in this function.
+// Create instrument parts for drums snare and hihat.
 let sequence = new Tone.Part((time, event) => {
     drum.triggerAttackRelease(event.note, event.dur, time);
-}, parseArr);
-
+}, {});
 sequence.loop = Infinity;
 sequence.loopEnd = '1m';
-
 sequence.start(0);
-
-let sysExecute = (data) => {
-
-
-} //--X
+//--X
 
 //                                    _
 //        ___ _   _ ___  ___ ___   __| | ___
@@ -116,7 +109,7 @@ $("#play").on("click", (e) => {
         $(".grid-item").off("mousedown");
         $("#stop").attr("display", "inline");
         for (let x = 0; x < sequenceArr.length; x++) {
-           sequence.add(setup(parseTime(sequenceArr[x]), "C3", "4n")); parseArr.push(setup(parseTime(sequenceArr[x]), "C3", "4n"));
+           sequence.add(setup(parseTime(sequenceArr[x]), "C3", "4n"));
         }
 
         Tone.Transport.start('+0.1');
