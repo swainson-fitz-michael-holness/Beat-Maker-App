@@ -1,8 +1,14 @@
-// __
-// / ()     _  _, _      o  ,_|_
-// >-   /\// \/ ||/ /|/| | / \|
-// \___/ /\\_/\/||_/ | |_|/ \/|_/
-//             (|
+//###########################
+//###(:)#####':v:`####[`'`']#
+//###|:|#####(o:0)#####|::|##
+//###|:|######(:)######|::|##
+//###########################
+
+//  _____  _____   __ _  ___ _ __ (_)___| |_
+// / _ \ \/ / _ \ / _` |/ _ \ '_ \| / __| __|
+//|  __/>  < (_) | (_| |  __/ | | | \__ \ |_
+// \___/_/\_\___/ \__, |\___|_| |_|_|___/\__|
+//                |___/
 // Swainson Holness
 
 let sequenceArr = [];
@@ -15,8 +21,9 @@ let drum = new Tone.Sampler({
 }, () => {}).toMaster();
 //--X
 
-
+//=====================================
 // Dom design stuff and UI interface
+//=====================================
 for (let x = 0; x < 16; x++) {
     $(".grid-container").append("<div class='grid-item'>" + x + "</div>");
 };
@@ -44,22 +51,9 @@ for (let x = 0; x < 16; x++) {
 }
 //--X
 
-
-// play sequence array
-function playSequence() {
-    function setup(time, note, dur) {
-        return {
-            time: time,
-            note: note,
-            dur: dur
-        }
-    }
-
-    parseArr.push()
-}
-
-
+//=====================================
 // Create instrument parts for drums snare and hihat.
+//=====================================
 let sequence = new Tone.Part((time, event) => {
     drum.triggerAttackRelease(event.note, event.dur, time);
 }, {});
@@ -68,16 +62,11 @@ sequence.loopEnd = '1m';
 sequence.start(0);
 //--X
 
-//                                    _
-//        ___ _   _ ___  ___ ___   __| | ___
-//  _____/ __| | | / __|/ __/ _ \ / _` |/ _ \
-// |_____\__ \ |_| \__ \ (_| (_) | (_| |  __/
-//       |___/\__, |___/\___\___/ \__,_|\___|
-//            |___/
 
-parseArr = [];
-
-function setup(time, note, dur) {
+//=====================================
+// system logic flow.
+//=====================================
+function setup(time, note, dur) { // returns object to add to part
     return {
         time: time,
         note: note,
@@ -85,7 +74,7 @@ function setup(time, note, dur) {
     }
 }
 
-function parseTime(num) { // refactor
+function parseTime(num) { // refactor this
     if (num === "0") {
         return 0;
     }
@@ -126,3 +115,14 @@ $("#stop").on("click", (e) => {
     }
 
 });
+
+//                                    _
+//        ___ _   _ ___  ___ ___   __| | ___
+//  _____/ __| | | / __|/ __/ _ \ / _` |/ _ \
+// |_____\__ \ |_| \__ \ (_| (_) | (_| |  __/
+//       |___/\__, |___/\___\___/ \__,_|\___|
+//            |___/
+
+// kick drum icon created by Raz Cohen
+// snare drum icon created by Andrejs Kirma
+// hihat icon created by Dmitry Mirolyubov

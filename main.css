@@ -1,6 +1,8 @@
 body {
     margin: 0px;
     background-color: #090909;
+        color: aliceblue;
+        font-family: 'Orbitron', sans-serif;
 }
 
 .grid-container {
@@ -32,7 +34,7 @@ box-shadow: inset 0px 0px 0px 1px #757575;
     padding-right: 3px;
     font-size: 8px;
     text-align: right;
-    color: aliceblue;
+/*    color: aliceblue;*/
     font-family: 'Orbitron', sans-serif;
 
     border-radius: 5px;
