@@ -6,16 +6,14 @@
 // Swainson Holness
 
 let sequenceArr = [];
+let parseArr = [];
 
 // Runs when the page loads.
 let drum = new Tone.Sampler({
     "C3": "./sounds/kick.mp3",
     "D3": "./sounds/snare.mp3",
     "E3": "./sounds/hihat.mp3",
-}, () => {
-    // Main function in the system
-    sysExecute();
-}).toMaster();
+}, () => {}).toMaster();
 //--X
 
 
@@ -38,47 +36,80 @@ for (let x = 0; x < 16; x++) {
             $(gridArr[this.innerHTML]).css("border-color", "brown");
             drum.triggerAttackRelease('C3');
         }
-
-        console.log(sequenceArr);
+        sequenceArr.sort(function (a, b) {
+            return a - b
+        });
     });
 }
-
 //--X
 
 
-// The code for the system logic goes here.
+// play sequence array
+
+function playSequence() {
+    function setup(time, note, dur) {
+        return {
+            time: time,
+            note: note,
+            dur: dur
+        }
+    }
+
+    parseArr.push()
+}
+
+
 // Update the system, add features in this function.
-let sysExecute = () => {
+let sysExecute = (data) => {
     //    drum.triggerAttackRelease('C3', "4n", "1m");
     let sequence = new Tone.Part((time, event) => {
         drum.triggerAttackRelease(event.note, event.dur, time);
-    }, [{
-            time: 0,
-            note: "E3",
-            dur: "4n"
-        }, {
-            time: "16n",
-            note: "E3",
-            dur: "4n"
-        }, {
-            time: "16n + 16n",
-            note: "E3",
-            dur: "4n"
-        }, {
-            time: "16n + 16n + 16n",
-            note: "E3",
-            dur: "4n"
-        }, {
-            time: "16n + 16n + 16n + 16n",
-            note: "D3",
-            dur: "4n"
-        }, {
-            time: "16n + 16n + 16n + 16n + 16n",
-            note: "E3",
-            dur: "4n"
-        }
-    ]);
+    }, parseArr);
+    console.log(parseArr);
+
+    sequence.loop = Infinity;
+sequence.loopEnd = '1m';
 
     sequence.start(0);
     Tone.Transport.start('+0.1');
+
 } //--X
+
+
+$("#play").on("click", (e) => {
+    e.preventDefault;
+    parseArr  = [];
+    function setup(time, note, dur) {
+        return {
+            time: time,
+            note: note,
+            dur: dur
+        }
+    }
+
+    function parseTime(num) {
+        console.log(num)
+        if (num === "0") {
+            return 0;
+        }
+        if (num === "1") {
+            return "16n";
+        }
+        if (num > 1) {
+            let temp ="16n";
+            for(var i = 0; i < num - 1; i++) {
+                temp = temp + "+16n"
+            }
+            return temp;
+        }
+    }
+
+    if (sequenceArr.length === 0) {
+
+    } else {
+        for (let x = 0; x < sequenceArr.length; x++) {
+            parseArr.push(setup(parseTime(sequenceArr[x]), "C3", "4n"));
+        }
+        sysExecute();
+    }
+});

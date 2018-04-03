@@ -18,10 +18,9 @@ body {
 
     border: 1px solid rgba(0, 0, 0, 0.8);
 
-background-image: linear-gradient(to right top, #051937, #192b4a, #2b3d5e, #3d5172, #506687);
+background-color: rgb(46, 58, 71);
 
 /*
-
 box-shadow: inset 0px 0px 0px 1px #757575;
 -webkit-box-shadow: inset 0px 0px 0px 1px #757575;
 -moz-box-shadow: inset 0px 0px 0px 1px #757575;
@@ -29,10 +28,12 @@ box-shadow: inset 0px 0px 0px 1px #757575;
 */
 
 
-    font-size: 10px;
+
+    padding-right: 3px;
+    font-size: 8px;
     text-align: right;
     color: aliceblue;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Orbitron', sans-serif;
 
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -42,4 +43,8 @@ box-shadow: inset 0px 0px 0px 1px #757575;
 
     border-color: black;
 
+}
+
+#play{
+    padding-left: 30px;
 }
