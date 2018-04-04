@@ -45,6 +45,21 @@ function getNote() {
     }
 }
 
+
+function getColor() {
+    for (var i = 0; i < state.length; i++) {
+        if (state[0]) {
+            return "brown";
+        }
+        if (state[1]) {
+            return "gold";
+        }
+        if (state[2]) {
+            return "lightGreen";
+        }
+    }
+}
+
 // Runs when the page loads.
 let drum = new Tone.Sampler({
     "C3": "./sounds/kick.mp3",
@@ -70,7 +85,7 @@ function updateSequence(sequenceArr, val) {
         $(gridArr[val.innerHTML]).css("border-color", "black");
     } else {
         sequenceArr.push(val.innerHTML);
-        $(gridArr[val.innerHTML]).css("border-color", "brown");
+        $(gridArr[val.innerHTML]).css("border-color", getColor());
         drum.triggerAttackRelease(getNote());
     }
     sequenceArr.sort(function (a, b) {
@@ -161,7 +176,7 @@ function setInstrumentState(val) {
 //        console.log(x == gridArr[x].innerHTML)
 
         if(checkState().includes(gridArr[x].innerHTML)) {
-            $(gridArr[x]).css("border-color", "brown");
+            $(gridArr[x]).css("border-color", getColor());
         } else {
             $(gridArr[x]).css("border-color", "black");
 
@@ -227,12 +242,18 @@ $("#stop").on("click", (e) => {
 
 
 $("#kick").on("click", (e) => {
+    $($(this)).css("fill", "brown");
+    $($("#kickClr")).css("fill", "brown");
     setInstrumentState([true, false, false]);
 });
 $("#snare").on("click", (e) => {
+    $($(this)).css("fill", "gold");
+    $($(".snareClr")).css("fill", "gold");
     setInstrumentState([false, true, false]);
 });
 $("#hihat").on("click", (e) => {
+    $($(this)).css("fill", "lightGreen");
+    $($(".hihatClr")).css("fill", "lightGreen");
     setInstrumentState([false, false, true]);
 });
 
