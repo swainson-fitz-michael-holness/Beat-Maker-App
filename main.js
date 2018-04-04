@@ -155,7 +155,7 @@ function setInstrumentState(val) {
     state = val;
     parsePart().removeAll();
 
-    console.log(checkState());
+//    console.log(checkState());
 
     for (let x = 0; x < 16; x++) {
 //        console.log(x == gridArr[x].innerHTML)
