@@ -13,8 +13,9 @@
 
 let kickArr = [];
 let snareArr = [];
-let hihaArr = [];
+let hihatArr = [];
 let state = [true, false, false] // state[0] = kick, state[1] = snare, state[2] = hihat,
+
 
 function checkState() {
     for (var i = 0; i < state.length; i++) {
@@ -26,6 +27,20 @@ function checkState() {
         }
         if (state[2]) {
             return hihatArr;
+        }
+    }
+}
+
+function getNote() {
+    for (var i = 0; i < state.length; i++) {
+        if (state[0]) {
+            return "C3";
+        }
+        if (state[1]) {
+            return "D3";
+        }
+        if (state[2]) {
+            return "E3";
         }
     }
 }
@@ -56,7 +71,7 @@ function updateSequence(sequenceArr, val) {
     } else {
         sequenceArr.push(val.innerHTML);
         $(gridArr[val.innerHTML]).css("border-color", "brown");
-        drum.triggerAttackRelease('C3');
+        drum.triggerAttackRelease(getNote());
     }
     sequenceArr.sort(function (a, b) {
         return a - b
@@ -127,6 +142,38 @@ function parsePart() {
     if (checkState() === kickArr) {
         return kickPart;
     }
+    if (checkState() === snareArr) {
+        return snarePart;
+    }
+    if (checkState() === hihatArr) {
+        return hihatPart;
+    }
+}
+
+function setInstrumentState(val) {
+    $(".grid-item").off("mousedown");
+    state = val;
+    parsePart().removeAll();
+
+    console.log(checkState());
+
+    for (let x = 0; x < 16; x++) {
+//        console.log(x == gridArr[x].innerHTML)
+
+        if(checkState().includes(gridArr[x].innerHTML)) {
+            $(gridArr[x]).css("border-color", "brown");
+        } else {
+            $(gridArr[x]).css("border-color", "black");
+
+        }
+
+        $(gridArr[x]).on("mousedown", () => {
+            updateSequence(checkState(), gridArr[x]);
+//            console.log($(gridArr[x].innerHTML));
+        });
+    }
+
+
 }
 
 // Button controls =====================================================
@@ -136,9 +183,19 @@ $("#play").on("click", (e) => {
 
     } else {
         $(".grid-item").off("mousedown");
+        $("#kick").off("click");
+        $("#snare").off("click");
+        $("#hihat").off("click");
+
         $("#stop").attr("display", "inline");
-        for (let x = 0; x < checkState().length; x++) {
-            parsePart().add(setup(parseTime(checkState()[x]), "C3", "4n"));
+        for (let x = 0; x < kickArr.length; x++) {
+            parsePart().add(setup(parseTime(kickArr[x]), "C3", "4n"));
+        }
+        for (let x = 0; x < snareArr.length; x++) {
+            parsePart().add(setup(parseTime(snareArr[x]), "D3", "4n"));
+        }
+        for (let x = 0; x < hihatArr.length; x++) {
+            parsePart().add(setup(parseTime(hihatArr[x]), "E3", "4n"));
         }
 
         Tone.Transport.start('+0.1');
@@ -147,6 +204,7 @@ $("#play").on("click", (e) => {
 
 $("#stop").on("click", (e) => {
     Tone.Transport.stop();
+    $(".grid-item").off("mousedown");
     parsePart().removeAll();
     $("#stop").attr("display", "none");
 
@@ -155,11 +213,29 @@ $("#stop").on("click", (e) => {
             updateSequence(checkState(), gridArr[x]);
         });
     }
+    $("#kick").on("click", (e) => {
+        setInstrumentState([true, false, false]);
+    });
+    $("#snare").on("click", (e) => {
+        setInstrumentState([false, true, false]);
+    });
+    $("#hihat").on("click", (e) => {
+        setInstrumentState([false, false, true]);
+    });
 });
 
+
+
 $("#kick").on("click", (e) => {
-    alert("hello");
+    setInstrumentState([true, false, false]);
 });
+$("#snare").on("click", (e) => {
+    setInstrumentState([false, true, false]);
+});
+$("#hihat").on("click", (e) => {
+    setInstrumentState([false, false, true]);
+});
+
 
 //                                    _
 //        ___ _   _ ___  ___ ___   __| | ___
