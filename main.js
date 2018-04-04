@@ -170,12 +170,12 @@ function setInstrumentState(val) {
     state = val;
     parsePart().removeAll();
 
-//    console.log(checkState());
+    //    console.log(checkState());
 
     for (let x = 0; x < 16; x++) {
-//        console.log(x == gridArr[x].innerHTML)
+        //        console.log(x == gridArr[x].innerHTML)
 
-        if(checkState().includes(gridArr[x].innerHTML)) {
+        if (checkState().includes(gridArr[x].innerHTML)) {
             $(gridArr[x]).css("border-color", getColor());
         } else {
             $(gridArr[x]).css("border-color", "black");
@@ -184,7 +184,7 @@ function setInstrumentState(val) {
 
         $(gridArr[x]).on("mousedown", () => {
             updateSequence(checkState(), gridArr[x]);
-//            console.log($(gridArr[x].innerHTML));
+            //            console.log($(gridArr[x].innerHTML));
         });
     }
 
@@ -192,6 +192,27 @@ function setInstrumentState(val) {
 }
 
 // Button controls =====================================================
+function controlBtnOn() {
+    $("#kick").on("click", (e) => {
+        $($("#kickClr")).css("fill", "brown");
+        $($(".snareClr")).attr("fill", "#C5EFE5");
+        $($(".hihatClr")).attr("fill", "#C5EFE5");
+        setInstrumentState([true, false, false]);
+    });
+    $("#snare").on("click", (e) => {
+        $($("#kickClr")).css("fill", "#C5EFE5");
+        $($(".snareClr")).attr("fill", "gold");
+        $($(".hihatClr")).attr("fill", "#C5EFE5");
+        setInstrumentState([false, true, false]);
+    });
+    $("#hihat").on("click", (e) => {
+        $($("#kickClr")).css("fill", "#C5EFE5");
+        $($(".snareClr")).attr("fill", "#C5EFE5");
+        $($(".hihatClr")).attr("fill", "lightGreen");
+        setInstrumentState([false, false, true]);
+    });
+}
+
 $("#play").on("click", (e) => {
     e.preventDefault;
     if (checkState().length === 0) {
@@ -228,34 +249,12 @@ $("#stop").on("click", (e) => {
             updateSequence(checkState(), gridArr[x]);
         });
     }
-    $("#kick").on("click", (e) => {
-        setInstrumentState([true, false, false]);
-    });
-    $("#snare").on("click", (e) => {
-        setInstrumentState([false, true, false]);
-    });
-    $("#hihat").on("click", (e) => {
-        setInstrumentState([false, false, true]);
-    });
+controlBtnOn();
 });
 
+controlBtnOn();
 
 
-$("#kick").on("click", (e) => {
-    $($(this)).css("fill", "brown");
-    $($("#kickClr")).css("fill", "brown");
-    setInstrumentState([true, false, false]);
-});
-$("#snare").on("click", (e) => {
-    $($(this)).css("fill", "gold");
-    $($(".snareClr")).css("fill", "gold");
-    setInstrumentState([false, true, false]);
-});
-$("#hihat").on("click", (e) => {
-    $($(this)).css("fill", "lightGreen");
-    $($(".hihatClr")).css("fill", "lightGreen");
-    setInstrumentState([false, false, true]);
-});
 
 
 //                                    _
