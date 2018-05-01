@@ -25,6 +25,44 @@ window.onload = function () {
     kickPart.loop = Infinity;
     kickPart.loopEnd = '1m';
     kickPart.start(0);
+    let snarePart = new Tone.Part((time, event) => {
+        drum.triggerAttackRelease(event.note, event.dur, time);
+    }, {});
+    snarePart.loop = Infinity;
+    snarePart.loopEnd = '1m';
+    snarePart.start(0);
+
+    let hihatPart = new Tone.Part((time, event) => {
+        drum.triggerAttackRelease(event.note, event.dur, time);
+    }, {});
+    hihatPart.loop = Infinity;
+    hihatPart.loopEnd = '1m';
+    hihatPart.start(0);
+
+    function setup(time, note, dur) { // returns object to add to part
+        return {
+            time: time,
+            note: note,
+            dur: dur
+        }
+    }
+
+    function parseTime(num) { // refactor this
+        if (num === "0") {
+            return 0;
+        }
+        if (num === "1") {
+            return "16n";
+        }
+        if (num > 1) {
+            let temp = "16n";
+            for (var i = 0; i < num - 1; i++) {
+                temp = temp + "+16n"
+            }
+            return temp;
+        }
+    }
+
     //------------
 
 
@@ -74,14 +112,17 @@ window.onload = function () {
                 if (state.instrument == "kick") {
                     $(gridArr[x]).css("border-color", "brown");
                     state.kick.push(gridArr[x].innerHTML);
+                    kickPart.add(setup(parseTime(gridArr[x].innerHTML), "C3", "4n"));
 
                 } else if (state.instrument == "snare") {
                     $(gridArr[x]).css("border-color", "gold");
                     state.snare.push(gridArr[x].innerHTML);
+                    snarePart.add(setup(parseTime(gridArr[x].innerHTML), "D3", "4n"));
 
                 } else if (state.instrument == "hihat") {
                     $(gridArr[x]).css("border-color", "lightGreen");
                     state.hihat.push(gridArr[x].innerHTML);
+                    hihatPart.add(setup(parseTime(gridArr[x].innerHTML), "E3", "4n"));
 
                 }
             } else {
@@ -89,47 +130,26 @@ window.onload = function () {
                 if (state.instrument == "kick") {
                     $(gridArr[x]).css("border-color", "rgb(0, 0, 0)");
                     state.kick.splice(state.kick.indexOf(x.toString()), 1);
+                    kickPart.remove(parseTime(gridArr[x].innerHTML));
 
                 } else if (state.instrument == "snare") {
                     $(gridArr[x]).css("border-color", "rgb(0, 0, 0)");
                     state.snare.splice(state.snare.indexOf(x.toString()), 1);
+                    snarePart.remove(parseTime(gridArr[x].innerHTML));
 
                 } else if (state.instrument == "hihat") {
                     $(gridArr[x]).css("border-color", "rgb(0, 0, 0)");
                     state.hihat.splice(state.hihat.indexOf(x.toString()), 1);
+                    hihatPart.remove(parseTime(gridArr[x].innerHTML));
 
                 }
             }
 
         });
     }
+
     $("#play").on("click", (e) => {
-        e.preventDefault;
-        parser(addParts);
-        if (checkState().length === 0) {
-
-        } else {
-            //        $(".grid-item").off("mousedown");
-            //        $("#kick").off("click");
-            //        $("#snare").off("click");
-            //        $("#hihat").off("click");
-            stateOn = true;
-            $("#stop").attr("display", "inline");
-            //        for (let x = 0; x < kickArr.length; x++) {
-            //            parsePart().add(setup(parseTime(kickArr[x]), "C3", "4n"));
-            //        }
-            //        for (let x = 0; x < snareArr.length; x++) {
-            //            parsePart().add(setup(parseTime(snareArr[x]), "D3", "4n"));
-            //        }
-            //        for (let x = 0; x < hihatArr.length; x++) {
-            //            parsePart().add(setup(parseTime(hihatArr[x]), "E3", "4n"));
-            //        }
-
-            Tone.Transport.start('+0.1');
-        }
+        Tone.Transport.start('+0.1');
     });
-
-
-
 
 }
