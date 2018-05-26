@@ -27,15 +27,11 @@ window.onload = function () {
 
     let kickPart = new Tone.Part((time, event) => {
         drum.triggerAttackRelease(event.note, event.dur, time);
-        Tone.Draw.schedule(function () {
-            //        $("#container").css("background-color", "blue");
-
-        }, time) //use AudioContext time of the event
-
     }, {});
     kickPart.loop = Infinity;
     kickPart.loopEnd = '1m';
     kickPart.start(0);
+
     let snarePart = new Tone.Part((time, event) => {
         drum.triggerAttackRelease(event.note, event.dur, time);
     }, {});
@@ -61,7 +57,7 @@ window.onload = function () {
         }
     }
 
-    function parseTime(num) { // refactor this
+    function parseTime(num) { // refactor this, sets up when to play a note
         if (num === "0") {
             return 0;
         }
