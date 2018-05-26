@@ -168,4 +168,12 @@ window.onload = function () {
         $("#stop").attr("display", "none");
     });
 
+//    Tempo slider
+    let tempo = document.getElementById("tempo");
+    let tempoNum = document.getElementById("tempo-num");
+    tempoNum.innerHTML = tempo.value;
+    tempo.oninput = function() {
+        tempoNum.innerHTML = this.value;
+    }
+
 }
