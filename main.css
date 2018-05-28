@@ -53,6 +53,9 @@ box-shadow: inset 0px 0px 0px 1px #757575;
 }
 
 .slider {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
     -webkit-appearance: none;
     width: 80%;
     height: 7px;
@@ -82,3 +85,13 @@ box-shadow: inset 0px 0px 0px 1px #757575;
     background: #54D6BD;
     cursor: pointer;
 }
+
+.tempo-container {
+    display: block;
+    margin-top: 15px;
+}
+
+/*
+.tempo-text {
+    width: 10px;
+}*/
