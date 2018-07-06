@@ -1,6 +1,6 @@
 window.onload = function () {
-
-
+    //play token
+    let playToken = false;
 
     //display pads. The numbers in the pad are used to identify it.
     for (let x = 0; x < 16; x++) {
@@ -125,16 +125,25 @@ window.onload = function () {
                     $(gridArr[x]).css("border-color", "brown");
                     state.kick.push(gridArr[x].innerHTML);
                     kickPart.add(setup(parseTime(gridArr[x].innerHTML), "C3", "4n", gridArr[x].innerHTML));
+                    if (playToken === false) {
+                        drum.triggerAttackRelease('C3');
+                    }
 
                 } else if (state.instrument == "snare") {
                     $(gridArr[x]).css("border-color", "gold");
                     state.snare.push(gridArr[x].innerHTML);
                     snarePart.add(setup(parseTime(gridArr[x].innerHTML), "D3", "4n", gridArr[x].innerHTML));
+                    if (playToken === false) {
+                        drum.triggerAttackRelease('D3');
+                    }
 
                 } else if (state.instrument == "hihat") {
                     $(gridArr[x]).css("border-color", "lightGreen");
                     state.hihat.push(gridArr[x].innerHTML);
                     hihatPart.add(setup(parseTime(gridArr[x].innerHTML), "E3", "4n", gridArr[x].innerHTML));
+                    if (playToken === false) {
+                        drum.triggerAttackRelease('E3');
+                    }
 
                 }
             } else {
@@ -161,14 +170,13 @@ window.onload = function () {
     }
 
     $("#play").on("click", (e) => {
-        let init = new Tone.Synth().toMaster();
-        init.triggerAttackRelease("C4", "16n", 0.1);
-
+        playToken = true;
         Tone.Transport.start('+0.1');
         $("#stop").attr("display", "inline");
     });
 
     $("#stop").on("click", (e) => {
+        playToken = false;
         Tone.Transport.stop();
         $("#stop").attr("display", "none");
     });
