@@ -21,32 +21,25 @@ window.onload = function () {
 
 
     //load sounds and parts
+    function partCreator() {
+        let namePart = new Tone.Part((time, event) => {
+            drum.triggerAttackRelease(event.note, event.dur, time);
+        }, {});
+        namePart.loop = Infinity;
+        namePart.loopEnd = '1m';
+        namePart.start(0);
+        return namePart;
+    }
+
     let drum = new Tone.Sampler({
         "C3": "./sounds/kick.mp3",
         "D3": "./sounds/snare.mp3",
         "E3": "./sounds/hihat.mp3",
     }, () => {}).toMaster();
 
-    let kickPart = new Tone.Part((time, event) => {
-        drum.triggerAttackRelease(event.note, event.dur, time);
-    }, {});
-    kickPart.loop = Infinity;
-    kickPart.loopEnd = '1m';
-    kickPart.start(0);
-
-    let snarePart = new Tone.Part((time, event) => {
-        drum.triggerAttackRelease(event.note, event.dur, time);
-    }, {});
-    snarePart.loop = Infinity;
-    snarePart.loopEnd = '1m';
-    snarePart.start(0);
-
-    let hihatPart = new Tone.Part((time, event) => {
-        drum.triggerAttackRelease(event.note, event.dur, time);
-    }, {});
-    hihatPart.loop = Infinity;
-    hihatPart.loopEnd = '1m';
-    hihatPart.start(0);
+    let kickPart = partCreator();
+    let snarePart = partCreator();
+    let hihatPart = partCreator();
     //-----------------
 
 
@@ -90,23 +83,26 @@ window.onload = function () {
     }
 
     //instrument states
+
+    //refactor this
     function stateBtn() {
         $("#kick").on("click", (e) => {
-            state.instrument = "kick";
+            console.log(e.currentTarget.id)
+            state.instrument = e.currentTarget.id;
             $($("#kickClr")).css("fill", "brown");
             $($(".snareClr")).attr("fill", "#C5EFE5");
             $($(".hihatClr")).attr("fill", "#C5EFE5");
             loadState(state.kick, "brown");
         });
         $("#snare").on("click", (e) => {
-            state.instrument = "snare";
+            state.instrument = e.currentTarget.id;
             $($("#kickClr")).css("fill", "#C5EFE5");
             $($(".snareClr")).attr("fill", "gold");
             $($(".hihatClr")).attr("fill", "#C5EFE5");
             loadState(state.snare, "gold");
         });
         $("#hihat").on("click", (e) => {
-            state.instrument = "hihat";
+            state.instrument = e.currentTarget.id;
             $($("#kickClr")).css("fill", "#C5EFE5");
             $($(".snareClr")).attr("fill", "#C5EFE5");
             $($(".hihatClr")).attr("fill", "lightGreen");
@@ -191,6 +187,6 @@ window.onload = function () {
     tempo.addEventListener("input", function (e) {
         Tone.Transport.bpm.value = parseInt(e.target.value);
     });
-    //    Tone.Transport.swing = 0.25;
+    //        Tone.Transport.swing = 0.25;
 
 }
