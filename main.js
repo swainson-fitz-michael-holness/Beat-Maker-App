@@ -1,5 +1,7 @@
 window.onload = function () {
 
+
+
     //display pads. The numbers in the pad are used to identify it.
     for (let x = 0; x < 16; x++) {
         $(".grid-container").append("<div class='grid-item'>" + x + "</div>");
@@ -159,6 +161,9 @@ window.onload = function () {
     }
 
     $("#play").on("click", (e) => {
+        let init = new Tone.Synth().toMaster();
+        init.triggerAttackRelease("C4", "16n", 0.1);
+
         Tone.Transport.start('+0.1');
         $("#stop").attr("display", "inline");
     });
@@ -168,16 +173,16 @@ window.onload = function () {
         $("#stop").attr("display", "none");
     });
 
-//    Tempo slider
+    //    Tempo slider
     let tempo = document.getElementById("tempo");
     let tempoNum = document.getElementById("tempo-num");
     tempoNum.innerHTML = tempo.value;
-    tempo.oninput = function() {
+    tempo.oninput = function () {
         tempoNum.innerHTML = this.value;
     }
-    tempo.addEventListener("input", function(e){
+    tempo.addEventListener("input", function (e) {
         Tone.Transport.bpm.value = parseInt(e.target.value);
     });
-//    Tone.Transport.swing = 0.7
+    //    Tone.Transport.swing = 0.25;
 
 }
