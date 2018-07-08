@@ -72,7 +72,7 @@ window.onload = function () {
 
 
     //Cosmetically switches state
-    function loadState(val, color) {
+    function loadState(val, color, stateInst) {
         for (let x = 0; x < 16; x++) {
             if (val.includes(gridArr[x].innerHTML)) {
                 $(gridArr[x]).css("border-color", color);
@@ -82,12 +82,8 @@ window.onload = function () {
         }
     }
 
-    //instrument states
-
-    //refactor this
     function stateBtn() {
         $("#kick").on("click", (e) => {
-            console.log(e.currentTarget.id)
             state.instrument = e.currentTarget.id;
             $($("#kickClr")).css("fill", "brown");
             $($(".snareClr")).attr("fill", "#C5EFE5");
@@ -187,6 +183,6 @@ window.onload = function () {
     tempo.addEventListener("input", function (e) {
         Tone.Transport.bpm.value = parseInt(e.target.value);
     });
-    //        Tone.Transport.swing = 0.25;
+//            Tone.Transport.swing = 0.25;
 
 }
