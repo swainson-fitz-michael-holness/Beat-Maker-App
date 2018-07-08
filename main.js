@@ -14,7 +14,9 @@ window.onload = function () {
         instrument: "kick",
         kick: [],
         snare: [],
-        hihat: []
+        hihat: [],
+        clap: [],
+        shake: []
     };
     $($("#kickClr")).css("fill", "brown");
     //-----------------
@@ -35,11 +37,15 @@ window.onload = function () {
         "C3": "./sounds/kick.mp3",
         "D3": "./sounds/snare.mp3",
         "E3": "./sounds/hihat.mp3",
+        "F3": "./sounds/clap.mp3",
+        "G3": "./sounds/shake.mp3"
     }, () => {}).toMaster();
 
     let kickPart = partCreator();
     let snarePart = partCreator();
     let hihatPart = partCreator();
+    let clapPart = partCreator();
+    let shakePart = partCreator();
     //-----------------
 
 
@@ -88,6 +94,8 @@ window.onload = function () {
             $($("#kickClr")).css("fill", "brown");
             $($(".snareClr")).attr("fill", "#C5EFE5");
             $($(".hihatClr")).attr("fill", "#C5EFE5");
+            $($(".clapClr")).attr("fill", "#C5EFE5");
+            $($(".shakeClr")).attr("fill", "#C5EFE5");
             loadState(state.kick, "brown");
         });
         $("#snare").on("click", (e) => {
@@ -95,6 +103,8 @@ window.onload = function () {
             $($("#kickClr")).css("fill", "#C5EFE5");
             $($(".snareClr")).attr("fill", "gold");
             $($(".hihatClr")).attr("fill", "#C5EFE5");
+            $($(".clapClr")).attr("fill", "#C5EFE5");
+            $($(".shakeClr")).attr("fill", "#C5EFE5");
             loadState(state.snare, "gold");
         });
         $("#hihat").on("click", (e) => {
@@ -102,7 +112,27 @@ window.onload = function () {
             $($("#kickClr")).css("fill", "#C5EFE5");
             $($(".snareClr")).attr("fill", "#C5EFE5");
             $($(".hihatClr")).attr("fill", "lightGreen");
+            $($(".clapClr")).attr("fill", "#C5EFE5");
+            $($(".shakeClr")).attr("fill", "#C5EFE5");
             loadState(state.hihat, "lightGreen");
+        });
+        $("#clap").on("click", (e) => {
+            state.instrument = e.currentTarget.id;
+            $($("#kickClr")).css("fill", "#C5EFE5");
+            $($(".snareClr")).attr("fill", "#C5EFE5");
+            $($(".hihatClr")).attr("fill", "#C5EFE5");
+            $($(".clapClr")).attr("fill", "blue");
+            $($(".shakeClr")).attr("fill", "#C5EFE5");
+            loadState(state.clap, "blue");
+        });
+        $("#shake").on("click", (e) => {
+            state.instrument = e.currentTarget.id;
+            $($("#kickClr")).css("fill", "#C5EFE5");
+            $($(".snareClr")).attr("fill", "#C5EFE5");
+            $($(".hihatClr")).attr("fill", "#C5EFE5");
+            $($(".clapClr")).attr("fill", "#C5EFE5");
+            $($(".shakeClr")).attr("fill", "pink");
+            loadState(state.shake, "pink");
         });
     }
     stateBtn();
@@ -137,6 +167,22 @@ window.onload = function () {
                         drum.triggerAttackRelease('E3');
                     }
 
+                } else if (state.instrument == "clap") {
+                    $(gridArr[x]).css("border-color", "blue");
+                    state.clap.push(gridArr[x].innerHTML);
+                    clapPart.add(setup(parseTime(gridArr[x].innerHTML), "F3", "4n", gridArr[x].innerHTML));
+                    if (playToken === false) {
+                        drum.triggerAttackRelease('F3');
+                    }
+
+                } else if (state.instrument == "shake") {
+                    $(gridArr[x]).css("border-color", "pink");
+                    state.shake.push(gridArr[x].innerHTML);
+                    shakePart.add(setup(parseTime(gridArr[x].innerHTML), "G3", "4n", gridArr[x].innerHTML));
+                    if (playToken === false) {
+                        drum.triggerAttackRelease('G3');
+                    }
+
                 }
             } else {
                 //TURN OFF
@@ -154,6 +200,16 @@ window.onload = function () {
                     $(gridArr[x]).css("border-color", "rgb(0, 0, 0)");
                     state.hihat.splice(state.hihat.indexOf(x.toString()), 1);
                     hihatPart.remove(parseTime(gridArr[x].innerHTML));
+
+                } else if (state.instrument == "clap") {
+                    $(gridArr[x]).css("border-color", "rgb(0, 0, 0)");
+                    state.clap.splice(state.clap.indexOf(x.toString()), 1);
+                    clapPart.remove(parseTime(gridArr[x].innerHTML));
+
+                } else if (state.instrument == "shake") {
+                    $(gridArr[x]).css("border-color", "rgb(0, 0, 0)");
+                    state.shake.splice(state.shake.indexOf(x.toString()), 1);
+                    shakePart.remove(parseTime(gridArr[x].innerHTML));
 
                 }
             }
@@ -183,6 +239,6 @@ window.onload = function () {
     tempo.addEventListener("input", function (e) {
         Tone.Transport.bpm.value = parseInt(e.target.value);
     });
-//            Tone.Transport.swing = 0.25;
+    //            Tone.Transport.swing = 0.25;
 
 }
