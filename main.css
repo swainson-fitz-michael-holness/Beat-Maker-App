@@ -13,7 +13,8 @@ body {
     grid-template-columns: auto auto auto auto;
     /*    background-color: #2196F3;*/
     padding: 0px;
-    margin: 12px;
+    margin: auto;
+    margin-bottom: 20px
 }
 
 .grid-item {
@@ -95,3 +96,14 @@ box-shadow: inset 0px 0px 0px 1px #757575;
 .tempo-text {
     width: 10px;
 }*/
+
+#container {
+    display: block;
+    max-width: 375px;
+    margin: auto;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.5em;
+}
