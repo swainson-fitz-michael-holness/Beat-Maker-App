@@ -239,6 +239,6 @@ window.onload = function () {
     tempo.addEventListener("input", function (e) {
         Tone.Transport.bpm.value = parseInt(e.target.value);
     });
-    //            Tone.Transport.swing = 0.25;
+//                Tone.Transport.swing = 0.15;
 
 }
