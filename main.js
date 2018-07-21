@@ -20,16 +20,29 @@ window.onload = function () {
     };
     $($("#kickClr")).css("fill", "brown");
     //-----------------
-
+    //console.log(gridArr)
 
     //load sounds and parts
     function partCreator() {
         let namePart = new Tone.Part((time, event) => {
             drum.triggerAttackRelease(event.note, event.dur, time);
+//            console.log(event)
+            Tone.Draw.schedule(function () {
+                if ($(gridArr[event.item]).css("border-color") !== "rgb(0, 0, 0)") {
+                    $(gridArr[event.item]).css("opacity", 0.5).animate({
+                        "opacity": 1
+                    }, 300)
+                }
+//                console.log($(gridArr[event.item]).css("border-color"))
+            }, time);
+
         }, {});
         namePart.loop = Infinity;
         namePart.loopEnd = '1m';
         namePart.start(0);
+        //        Tone.Draw.schedule(function(){
+        //            $(".grid-item").css("opacity", 1).animate({"opacity" : 0}, 300)
+        //        });
         return namePart;
     }
 
@@ -239,6 +252,19 @@ window.onload = function () {
     tempo.addEventListener("input", function (e) {
         Tone.Transport.bpm.value = parseInt(e.target.value);
     });
-//                Tone.Transport.swing = 0.15;
+
+
+    // Swing slider
+    let swing = document.getElementById("swing");
+    let swingNum = document.getElementById("swing-num");
+    swingNum.innerHTML = swing.value;
+    swing.oninput = function () {
+        swingNum.innerHTML = this.value;
+    }
+    swing.addEventListener("input", function (e) {
+        Tone.Transport.swing = parseInt(e.target.value) / 100;
+    });
+
+    //                Tone.Transport.swing = 0.15;
 
 }

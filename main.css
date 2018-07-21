@@ -76,21 +76,21 @@ box-shadow: inset 0px 0px 0px 1px #757575;
     appearance: none;
     width: 25px;
     height: 25px;
-    background: #54D6BD;
+    background: gold;
     cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
     width: 25px;
     height: 25px;
-    background: #54D6BD;
+    background: gold;
     cursor: pointer;
 }
 
-.tempo-container {
+.slider-container {
     display: block;
     margin: auto;
-    margin-top: 25px;
+    margin-top: 45px;
     width: 298px;
 }
 
