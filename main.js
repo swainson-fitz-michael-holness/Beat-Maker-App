@@ -26,14 +26,14 @@ window.onload = function () {
     function partCreator() {
         let namePart = new Tone.Part((time, event) => {
             drum.triggerAttackRelease(event.note, event.dur, time);
-//            console.log(event)
+            //            console.log(event)
             Tone.Draw.schedule(function () {
                 if ($(gridArr[event.item]).css("border-color") !== "rgb(0, 0, 0)") {
                     $(gridArr[event.item]).css("opacity", 0.5).animate({
                         "opacity": 1
                     }, 300)
                 }
-//                console.log($(gridArr[event.item]).css("border-color"))
+                //                console.log($(gridArr[event.item]).css("border-color"))
             }, time);
 
         }, {});
@@ -266,5 +266,32 @@ window.onload = function () {
     });
 
     //                Tone.Transport.swing = 0.15;
+
+    //INFOMODAL - code from w3schools
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 
 }
