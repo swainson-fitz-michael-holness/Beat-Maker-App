@@ -115,4 +115,24 @@ box-shadow: inset 0px 0px 0px 1px #757575;
     margin: auto;
 }
 
+.ctrlPlay {
+    width:  100px;
+    display: block;
+    margin: auto;
+}
 
+.plyText {
+    margin-bottom: 7px;
+    padding-bottom: 0px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+hr {
+    width: 298px;
+}
+
+.plyBtn {
+    display: block;
+    margin: auto;
+}
