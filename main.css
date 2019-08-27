@@ -135,6 +135,10 @@ box-shadow: inset 0px 0px 0px 1px #757575;
     text-align: center;
 }
 
+.center {
+    text-align: center;
+}
+
 hr {
     width: 298px;
     opacity: 0.4;
