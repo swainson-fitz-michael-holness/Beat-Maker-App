@@ -15,6 +15,7 @@ body {
     padding: 0px;
     margin: auto;
     margin-bottom: 20px;
+    background-color: #090909;
 }
 
 .grid-item {
@@ -103,6 +104,7 @@ box-shadow: inset 0px 0px 0px 1px #757575;
     display: block;
     max-width: 375px;
     margin: auto;
+    
 }
 
 .iconAdj {
@@ -217,6 +219,11 @@ hr {
 
 .txtColor {
     color: darkslategrey;
+    font-family: sans-serif;
+}
+
+.subtext {
+    font-size: 0.7rem
 }
 
 @media only screen and (min-width: 800px) {

@@ -1,6 +1,7 @@
 window.onload = function () {
     //play token
     let playToken = false;
+    let init = false;
 
     //display pads. The numbers in the pad are used to identify it.
     for (let x = 0; x < 16; x++) {
@@ -26,23 +27,22 @@ window.onload = function () {
     function partCreator() {
         let namePart = new Tone.Part((time, event) => {
             drum.triggerAttackRelease(event.note, event.dur, time);
-            //            console.log(event)
             Tone.Draw.schedule(function () {
+ 
                 if ($(gridArr[event.item]).css("border-color") !== "rgb(0, 0, 0)") {
                     $(gridArr[event.item]).css("opacity", 0.5).animate({
                         "opacity": 1
                     }, 300)
                 }
-                //                console.log($(gridArr[event.item]).css("border-color"))
+                
+//                                console.log($(gridArr[event.item]).css("border-color"))
             }, time);
 
         }, {});
         namePart.loop = Infinity;
         namePart.loopEnd = '1m';
         namePart.start(0);
-        //        Tone.Draw.schedule(function(){
-        //            $(".grid-item").css("opacity", 1).animate({"opacity" : 0}, 300)
-        //        });
+
         return namePart;
     }
 
@@ -229,17 +229,30 @@ window.onload = function () {
 
         });
     }
+    
+    $("body").on("click", () => {
+        if(init === false) {
+
+            var synth = new Tone.Synth({volume: "-127", mute: true}).toMaster();
+            
+            synth.triggerAttackRelease('C4', '8n');
+            init = true;
+        };
+          
+    });
 
     $("#play").on("click", (e) => {
         playToken = true;
         Tone.Transport.start('+0.1');
         $("#stop").attr("display", "inline");
+        $( "#control" ).text("STOP");
     });
 
     $("#stop").on("click", (e) => {
         playToken = false;
         Tone.Transport.stop();
         $("#stop").attr("display", "none");
+        $( "#control" ).text("PLAY");
     });
 
     //    Tempo slider
