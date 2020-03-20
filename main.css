@@ -20,7 +20,7 @@ body {
 
 .grid-item {
 
-    border: 1px solid rgba(0, 0, 0, 0.8);
+    border: 1px solid rgb(0, 0, 0);
 
     background-color: rgb(46, 58, 71);
 
@@ -104,7 +104,6 @@ box-shadow: inset 0px 0px 0px 1px #757575;
     display: block;
     max-width: 375px;
     margin: auto;
-    
 }
 
 .iconAdj {

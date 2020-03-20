@@ -2,6 +2,8 @@ window.onload = function () {
     //play token
     let playToken = false;
     let init = false;
+    
+
 
     //display pads. The numbers in the pad are used to identify it.
     for (let x = 0; x < 16; x++) {
@@ -29,7 +31,7 @@ window.onload = function () {
             drum.triggerAttackRelease(event.note, event.dur, time);
             Tone.Draw.schedule(function () {
  
-                if ($(gridArr[event.item]).css("border-color") !== "rgb(0, 0, 0)") {
+                if ($(gridArr[event.item]).css("border-top-color") !== "rgb(0, 0, 0)") {
                     $(gridArr[event.item]).css("opacity", 0.5).animate({
                         "opacity": 1
                     }, 300)
@@ -154,10 +156,19 @@ window.onload = function () {
     for (let x = 0; x < 16; x++) {
         $(gridArr[x]).on("mousedown", () => {
             //check the state of the button
-            if ($(gridArr[x]).css("border-color") == "rgb(0, 0, 0)") {
+//            console.log($(gridArr[x]).css(["border-top-color","border-bottom-color", "border-right-color", "border-left-color"]) )
+            
+//            $(gridArr[x]).css(["border-top-color","border-bottom-color", "border-right-color", "border-left-color"], "brown")
+            
+//console.log($(gridArr[x]).css("border-top-color"))
+            
+            if ($(gridArr[x]).css("border-top-color") == "rgb(0, 0, 0)") {
                 //TURN ON
                 if (state.instrument == "kick") {
                     $(gridArr[x]).css("border-color", "brown");
+                    
+//                    $(gridArr[x]).css("border-top-color","brown");
+//                    document.querySelector(".grid-item").style.borderTopColor = "blue";
                     state.kick.push(gridArr[x].innerHTML);
                     kickPart.add(setup(parseTime(gridArr[x].innerHTML), "C3", "4n", gridArr[x].innerHTML));
                     if (playToken === false) {
